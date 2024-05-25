@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kursi Mod - Pembayaran Premium</title>
+    <link rel="stylesheet" href="css/payment.css">
+</head>
+<body>
+    <header>
+        <h1>Pembayaran Premium Kursi Mod</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="game-mods.html">Game Mods</a>
+            <a href="app-mods.html">App Mods</a>
+            <div id="notification" class="notification" style="display: none;">Anda belum menyelesaikan pembayaran!</div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Informasi Pembayaran</h2>
+        <p>Silakan ikuti langkah-langkah di bawah ini untuk melakukan pembayaran melalui QRIS:</p>
+        <ol>
+            <li>Pilih metode pembayaran QRIS pada formulir di bawah.</li>
+            <li>Klik tombol "Bayar Sekarang" untuk melanjutkan.</li>
+            <li>Scan QRIS yang muncul dengan aplikasi e-wallet Anda.</li>
+            <li>Tunggu konfirmasi pembayaran.</li>
+            <li>Setelah melakukan pembayaran, kirim bukti pembayaran ke Telegram admin: <a href="https://t.me/your_telegram_username">Hubungi Admin</a>.</li>
+        </ol>
+        <form id="payment-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">Choose Payment Method</label>
+                <select id="paymentMethod" name="paymentMethod" required>
+                    <option value="qris">QRIS</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount">Payment Amount</label>
+                <input type="text" id="amount" name="amount" value="2.000 / 0,13" readonly>
+                <span>Rupiah / USD</span>
+            </div>
+            <button type="submit" class="btn">Bayar Sekarang</button>
+        </form>
+    </div>
+
+    <!-- QRIS Modal -->
+    <div id="qrisModal" class="modal">
+        <div class="modal-content">
+            <h2>Scan QRIS</h2>
+            <img id="qrisImage" src="qris.png" alt="QRIS Code">
+            <a id="downloadQris" href="qris.png" download="qris-code.png">Download QRIS</a>
+            <div class="timer" id="timer">10:00</div>
+            <button class="btn-close" onclick="closeModal()">Close</button>
+            <button id="completeButton" class="btn">Selesai</button>
+        </div>
+    </div>
+
+    <script>
+        let timerInterval;
+        let timeLeft = localStorage.getItem('timeLeft') ? parseInt(localStorage.getItem('timeLeft')) : 600; // 10 minutes in seconds
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('showNotification') === 'true') {
+                showNotification();
+            }
+
+            if (localStorage.getItem('timerRunning') === 'true') {
+                showModal();
+                startTimer();
+            }
+
+            document.getElementById('notification').addEventListener('click', showModal);
+
+            document.getElementById('payment-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                if (paymentMethod === 'qris') {
+                    if (!isPaymentInProgress()) { // Check if payment is already in progress
+                        showModal();
+                        startTimer();
+                        localStorage.setItem('timerRunning', 'true');
+                        localStorage.setItem('paymentInProgress', 'true');
+                    } else {
+                        alert('Anda sedang dalam proses pembayaran. Tunggu sampai selesai atau batalkan.');
+                    }
+                } else {
+                    alert('Redirecting to PayPal...');
+                }
+            });
+
+            document.getElementById('completeButton').addEventListener('click', () => {
+                alert('Terima kasih, pembayaran Anda telah selesai.');
+                resetPaymentStatus();
+            });
+        });
+
+        window.addEventListener('beforeunload', () => {
+            if (isPaymentInProgress()) {
+                localStorage.setItem('timeLeft', timeLeft);
+            }
+        });
+
+        function showModal() {
+            document.getElementById('qrisModal').style.display = 'flex';
+            hideNotification();
+        }
+
+        function closeModal() {
+            document.getElementById('qrisModal').style.display = 'none';
+            showNotification();
+            alert('Setelah melakukan pembayaran, kirim bukti pembayaran ke Telegram admin');
+        }
+
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'flex';
+            localStorage.setItem('showNotification', 'true');
+        }
+
+        function hideNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'none';
+            localStorage.setItem('showNotification', 'false');
+        }
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = formatTime(timeLeft);
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = formatTime(timeLeft);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Waktu pembayaran telah habis.');
+                    resetPaymentStatus();
+                }
+            }, 1000);
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function resetPaymentStatus() {
+            clearInterval(timerInterval);
+            timeLeft = 600; // Reset timer to 10 minutes
+            localStorage.removeItem('timerRunning');
+            localStorage.removeItem('showNotification');
+            localStorage.removeItem('timeLeft');
+            localStorage.removeItem('paymentInProgress'); // Remove payment in progress status
+            document.getElementById('qrisModal').style.display = 'none';
+            alert('Pembayaran telah selesai. Anda bisa melakukan pembayaran lagi jika diperlukan.');
+        }
+
+        function isPaymentInProgress() {
+            return localStorage.getItem('paymentInProgress') === 'true';
+        }
+    </script>
+</body>
+</html>

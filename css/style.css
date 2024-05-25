@@ -1,0 +1,227 @@
+/* CSS umum */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2; /* Warna latar belakang untuk light mode */
+    color: #333; /* Warna teks untuk light mode */
+    transition: background-color 0.3s, color 0.3s; /* Transisi untuk dark mode */
+}
+
+header {
+    background-color: #8B0000; /* Warna merah tua */
+    color: white; /* Warna teks untuk light mode */
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Memusatkan teks ke tengah */
+    transition: background-color 0.3s, color 0.3s; /* Transisi untuk dark mode */
+}
+
+header .header-content {
+    max-width: 1200px; /* Maksimal lebar header */
+    margin: 0 auto; /* Memusatkan header di tengah */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px; /* Menambahkan padding horizontal */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em; /* Ukuran font lebih besar untuk judul */
+}
+
+.sun-icon {
+    width: 30px; /* Lebar gambar matahari */
+    height: auto; /* Tinggi otomatis */
+    cursor: pointer;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav a {
+    color: white; /* Warna teks untuk light mode */
+    text-decoration: none;
+    padding: 15px 20px; /* Padding lebih besar */
+    margin: 0 1px;
+    font-size: 1em; /* Ukuran font lebih kecil */
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ffffff; /* Warna teks yang lebih terang saat hover */
+    border-radius: 5px;
+}
+
+.container {
+    width: 90%; /* Lebar lebih besar untuk perangkat kecil */
+    margin: 20px auto;
+    background: white; /* Warna latar belakang kontainer untuk light mode */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s; /* Transisi untuk dark mode */
+}
+
+.container h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #8B0000; /* Garis merah tua */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.item {
+    background: #fff; /* Warna latar belakang item untuk light mode */
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.item h3 {
+    margin-top: 0;
+}
+
+.item p {
+    margin: 10px 0;
+}
+
+.item a {
+    display: inline-block;
+    background-color: #8B0000; /* Warna merah tua */
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.item a:hover {
+    background-color: #B20000; /* Warna merah lebih terang saat hover */
+}
+
+.premium-info {
+    background-color: #d3d3d3; /* Warna abu-abu muda untuk info premium */
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: none; /* Hilangkan elemen info premium */
+}
+
+.premium-info a {
+    display: inline-block;
+    background-color: #8B0000; /* Warna merah tua */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.premium-info a:hover {
+    background-color: #B20000; /* Warna merah lebih terang saat hover */
+}
+
+/* Dark Mode Styling */
+body.dark-mode {
+    background-color: #121212; /* Warna latar belakang untuk dark mode */
+    color: #e0e0e0; /* Warna teks untuk dark mode */
+}
+
+header.dark-mode {
+    background-color: #1F1F1F; /* Warna latar belakang header untuk dark mode */
+    color: #e0e0e0; /* Warna teks header untuk dark mode */
+}
+
+header.dark-mode .header-content {
+    color: #e0e0e0; /* Warna teks untuk dark mode */
+}
+
+.container.dark-mode {
+    background: #1E1E1E; /* Warna latar belakang kontainer untuk dark mode */
+    color: #e0e0e0; /* Warna teks untuk dark mode */
+}
+
+.container.dark-mode h2 {
+    border-bottom: 2px solid #32CD32; /* Garis hijau terang untuk dark mode */
+}
+
+.item.dark-mode {
+    background: #2C2C2C; /* Warna latar belakang item untuk dark mode */
+    color: #e0e0e0; /* Warna teks untuk dark mode */
+}
+
+.item.dark-mode a {
+    background-color: #32CD32; /* Warna hijau terang untuk dark mode */
+}
+
+.item.dark-mode a:hover {
+    background-color:
+    #39FF14; /* Warna hijau lebih terang saat hover untuk dark mode */
+}
+
+.premium-info.dark-mode {
+    background-color: #333; /* Warna abu-abu gelap untuk info premium dalam dark mode */
+    color: #e0e0e0; /* Warna teks untuk dark mode */
+}
+
+.premium-info.dark-mode a {
+    background-color: #32CD32; /* Warna hijau terang untuk dark mode */
+}
+
+nav.dark-mode a {
+    color: #e0e0e0; /* Warna teks menu untuk dark mode */
+    background-color: #2C2C2C; /* Warna latar belakang untuk dark mode */
+    border-radius: 5px;
+}
+
+nav.dark-mode a:hover {
+    background-color: #3D3D3D; /* Warna latar belakang saat hover untuk dark mode */
+}
+
+.sun-icon.dark-mode {
+    filter: invert(1); /* Mengubah warna ikon untuk dark mode */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    header .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav.active {
+        display: flex;
+        flex-direction: row;
+        width: auto;
+    }
+    
+    .sun-icon {
+        position: absolute; /* Mengatur posisi absolut */
+        top: 20px; /* Menentukan jarak dari atas sebesar 20px */
+        right: 20px; /* Menentukan jarak dari kanan sebesar 20px */
+        width: 30px; /* Lebar ikon */
+        height: auto; /* Tinggi otomatis */
+        cursor: pointer; /* Mengubah kursor menjadi tanda panah saat diarahkan */
+        z-index: 1000; /* Membuat ikon berada di atas elemen lain */
+    }    
+    
+}
